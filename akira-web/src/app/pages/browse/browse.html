@@ -1,0 +1,14 @@
+<div class="container page-spacing">
+  <h1 class="page-title">{{ title }}</h1>
+  
+  <div class="results-grid">
+    <div class="movie-card" *ngFor="let movie of movies" [routerLink]="['/movies', movie.id]">
+      <div class="aspect-ratio">
+         <img [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'https://placehold.co/500x750/1a1d29/FFF?text=No+Image'" [alt]="movie.title">
+      </div>
+       <div class="card-overlay">
+        <h3>{{ movie.title }}</h3>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="container page-spacing">
+  <h1 class="page-title">My List</h1>
+  
+  <div class="results-grid" *ngIf="movies.length > 0; else emptyState">
+    <div class="movie-card" *ngFor="let movie of movies" [routerLink]="['/movies', movie.id]">
+      <div class="aspect-ratio">
+         <img [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'https://placehold.co/500x750/1a1d29/FFF?text=No+Image'" [alt]="movie.title">
+      </div>
+       <div class="card-overlay">
+        <h3>{{ movie.title }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #emptyState>
+      <div class="empty-state">
+          <p>Your watchlist is empty.</p>
+          <a routerLink="/movies" class="btn btn-primary" style="margin-top: 16px;">Browse Movies</a>
+      </div>
+  </ng-template>
+</div>

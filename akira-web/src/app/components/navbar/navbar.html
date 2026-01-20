@@ -1,0 +1,65 @@
+<nav class="navbar" [class.scrolled]="isScrolled">
+  <div class="container navbar-content">
+    <!-- Logo -->
+    <a routerLink="/" class="logo">
+      AKIRA
+    </a>
+
+    <!-- Desktop Menu (Public) -->
+    <div class="desktop-menu">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+      <a routerLink="/movies" routerLinkActive="active">Movies</a>
+      <!-- Only show these if logged in? Or redirect? For now, public links that might need auth -->
+      <a *ngIf="isLoggedIn$ | async" routerLink="/my-list" routerLinkActive="active">My List</a>
+    </div>
+
+    <!-- User Actions -->
+    <div class="user-actions">
+      <!-- Unauthenticated State -->
+      <ng-container *ngIf="(isLoggedIn$ | async) === false">
+        <a routerLink="/login" class="btn btn-glass" style="margin-right: 8px;">Log In</a>
+        <a routerLink="/register" class="btn btn-primary">Sign Up</a>
+      </ng-container>
+
+      <!-- Authenticated State -->
+      <ng-container *ngIf="isLoggedIn$ | async">
+        <button class="icon-btn search-btn" routerLink="/search">
+             <!-- Search Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </button>
+        
+        <div class="user-menu-trigger">
+             <!-- Simple Logout for now, dropdown later -->
+            <button (click)="logout()" class="btn btn-glass btn-sm">Logout</button>
+        </div>
+        
+        <div class="avatar">
+           <img [src]="'https://ui-avatars.com/api/?name=' + ((user$ | async)?.username || 'User') + '&background=FF6600&color=fff'" alt="User">
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Mobile Toggle -->
+    <button class="mobile-toggle" (click)="toggleMobileMenu()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Menu (Dropdown) -->
+  <div class="mobile-menu" *ngIf="isMobileMenuOpen">
+    <a routerLink="/" (click)="toggleMobileMenu()">Home</a>
+    <a routerLink="/movies" (click)="toggleMobileMenu()">Movies</a>
+    <a *ngIf="isLoggedIn$ | async" routerLink="/my-list" (click)="toggleMobileMenu()">My List</a>
+    
+    <div class="mobile-auth" *ngIf="(isLoggedIn$ | async) === false">
+        <a routerLink="/login" (click)="toggleMobileMenu()">Log In</a>
+        <a routerLink="/register" (click)="toggleMobileMenu()">Sign Up</a>
+    </div>
+
+    <div class="mobile-auth" *ngIf="isLoggedIn$ | async">
+        <a (click)="logout()">Logout</a>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,140 @@
+/* Global Styles & Variables */
+:root {
+  /* Color Palette - Akira/Crunchyroll Orange & Black */
+  --bg-body: #0a0a0a;
+  /* Almost Black */
+  --bg-surface: #141414;
+  /* Dark Grey for cards */
+
+  --color-primary: #FF6600;
+  /* Vibrant Crunchyroll-style Orange */
+  --color-primary-hover: #e55c00;
+
+  --color-secondary: #ffffff;
+
+  --text-primary: #ffffff;
+  --text-secondary: #d1d5db;
+  /* Light Grey */
+  --text-muted: #6b7280;
+  /* Medium Grey */
+
+  --gradient-obsidian: linear-gradient(to bottom, #141414, #0a0a0a);
+
+  /* Dimensions & Spacing */
+  --navbar-height: 72px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  /* Slightly sharper than Disney+ */
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+
+  /* Effects */
+  --shadow-card: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --glow-hover: 0 0 15px rgba(255, 102, 0, 0.4);
+  /* Orange Glow */
+
+  /* Animations */
+  --transition-fast: 0.2s ease;
+  --transition-smooth: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* Glass Mock */
+  --bg-glass: rgba(20, 20, 20, 0.85);
+  --bg-glass-hover: rgba(30, 30, 30, 0.95);
+}
+
+/* Reset & Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  /* Setup Font later in index.html */
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Bebas Neue', 'Inter', sans-serif;
+  letter-spacing: 0.5px;
+  font-weight: 400;
+  /* Bebas is naturally bold/thick */
+}
+
+/* Utilities */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background-color var(--transition-fast), transform 0.1s;
+  text-decoration: none;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+
+    &:hover {
+      background-color: var(--color-primary-hover);
+    }
+  }
+
+  &.btn-glass {
+    background-color: var(--bg-glass);
+    color: white;
+    backdrop-filter: blur(10px);
+
+    &:hover {
+      background-color: var(--bg-glass-hover);
+    }
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-body);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-surface);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}

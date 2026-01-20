@@ -1,0 +1,54 @@
+<div class="detail-page" *ngIf="movie$ | async as movie">
+  <!-- Hero / Backdrop -->
+  <div class="backdrop" [style.backgroundImage]="'url(' + getBackdropUrl(movie.backdrop_path) + ')'">
+    <div class="overlay"></div>
+    <div class="container content">
+      
+      <!-- Poster -->
+      <div class="poster">
+        <img [src]="getPosterUrl(movie.poster_path)" [alt]="movie.title">
+      </div>
+
+      <!-- Info -->
+      <div class="info">
+        <h1 class="title">{{ movie.title }}</h1>
+        
+        <div class="metadata">
+          <span class="rating">⭐ {{ movie.vote_average | number:'1.1-1' }}</span>
+          <span class="year">{{ movie.release_date | date:'yyyy' }}</span>
+          <span class="runtime" *ngIf="movie.runtime">{{ movie.runtime }} min</span>
+        </div>
+
+        <div class="genres">
+          <span class="genre-tag" *ngFor="let genre of movie.genres">{{ genre.name }}</span>
+        </div>
+
+        <p class="tagline" *ngIf="movie.tagline">"{{ movie.tagline }}"</p>
+        
+        <div class="actions">
+          <button class="btn btn-primary">Play Trailer</button>
+          <button class="btn btn-glass" (click)="toggleWatchlist()">
+            <span *ngIf="!isInWatchlist">+ My List</span>
+            <span *ngIf="isInWatchlist">✓ In List</span>
+          </button>
+        </div>
+
+        <p class="overview">{{ movie.overview }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cast Section -->
+  <div class="container section">
+    <h2>Top Cast</h2>
+    <div class="cast-grid" *ngIf="movie.credits?.cast">
+      <div class="cast-card" *ngFor="let actor of movie.credits.cast.slice(0, 6)">
+        <div class="cast-img">
+          <img [src]="actor.profile_path ? 'https://image.tmdb.org/t/p/w200'+actor.profile_path : 'https://ui-avatars.com/api/?name='+actor.name" [alt]="actor.name">
+        </div>
+        <p class="name">{{ actor.name }}</p>
+        <p class="character">{{ actor.character }}</p>
+      </div>
+    </div>
+  </div>
+</div>

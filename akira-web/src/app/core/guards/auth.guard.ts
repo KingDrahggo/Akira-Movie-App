@@ -1,0 +1,17 @@
+import { inject } from '@angular/core';
+import { Router, CanActivateFn } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+
+export const authGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  if (authService.isLoggedOn()) {
+    return true;
+  } else {
+    // Optional: Toast or Alert
+    // alert('You need to be logged in to see this page.');
+    router.navigate(['/login']);
+    return false;
+  }
+};

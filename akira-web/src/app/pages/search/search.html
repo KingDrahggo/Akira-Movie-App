@@ -1,0 +1,33 @@
+<div class="container page-spacing">
+  <div class="search-header">
+    <input 
+      type="text" 
+      class="search-input" 
+      placeholder="Search for movies, TV shows..." 
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearch($event)"
+      autofocus
+    >
+  </div>
+
+  <div class="results-grid" *ngIf="movies.length > 0; else noResults">
+    <div class="movie-card" *ngFor="let movie of movies" [routerLink]="['/movies', movie.id]">
+      <div class="aspect-ratio">
+        <img [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'https://placehold.co/500x750/1a1d29/FFF?text=No+Image'" [alt]="movie.title">
+      </div>
+      <div class="card-overlay">
+        <h3>{{ movie.title }}</h3>
+        <p>⭐ {{ movie.vote_average | number:'1.1-1' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noResults>
+    <div class="empty-state" *ngIf="searchTerm">
+      <p>No results found for "{{ searchTerm }}"</p>
+    </div>
+    <div class="empty-state" *ngIf="!searchTerm">
+        <p>Type above to start searching...</p>
+    </div>
+  </ng-template>
+</div>

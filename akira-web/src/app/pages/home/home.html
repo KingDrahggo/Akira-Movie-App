@@ -1,0 +1,50 @@
+<div class="hero">
+  <div class="hero-bg"></div> <!-- Separate BG for zoom effect -->
+  <div class="container hero-content">
+    <div class="hero-logo-placeholder"></div> <!-- Placeholder for a movie logo -->
+    <h1>Unlimited Movies, <br> TV Shows, & More.</h1>
+    <p>Watch anywhere. Cancel anytime.</p>
+    <button class="btn btn-primary start-btn" routerLink="/login">Get Started</button>
+  </div>
+</div>
+
+<div class="content-section container">
+  
+  <!-- Brand / Category Tiles (Disney+ Style) -->
+  <div class="brand-grid">
+    <a class="brand-card" routerLink="/movies" [queryParams]="{genre: 28, name: 'Action'}">
+      <div class="brand-label">Action</div>
+      <div class="brand-video"></div>
+    </a>
+    <a class="brand-card" routerLink="/movies" [queryParams]="{genre: 16, name: 'Animation'}"> <!-- Anime/Animation -->
+      <div class="brand-label">Anime</div>
+      <div class="brand-video"></div>
+    </a>
+    <a class="brand-card" routerLink="/movies" [queryParams]="{genre: 878, name: 'Sci-Fi'}">
+      <div class="brand-label">Sci-Fi</div>
+      <div class="brand-video"></div>
+    </a>
+    <a class="brand-card" routerLink="/movies" [queryParams]="{genre: 18, name: 'Drama'}">
+      <div class="brand-label">Drama</div>
+      <div class="brand-video"></div>
+    </a>
+    <a class="brand-card" routerLink="/movies" [queryParams]="{genre: 35, name: 'Comedy'}">
+      <div class="brand-label">Comedy</div>
+      <div class="brand-video"></div>
+    </a>
+  </div>
+
+  <h2 class="section-title">Trending Now</h2>
+  
+  <div class="movie-swimlane">
+    <div class="movie-card" *ngFor="let movie of movies$ | async" [routerLink]="['/movies', movie.id]">
+      <div class="aspect-ratio">
+        <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title">
+      </div>
+      <div class="card-overlay">
+        <h3>{{ movie.title }}</h3>
+        <p>⭐ {{ movie.vote_average | number:'1.1-1' }}</p>
+      </div>
+    </div>
+  </div>
+</div>
