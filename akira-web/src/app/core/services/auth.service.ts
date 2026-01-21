@@ -5,12 +5,13 @@ import { BehaviorSubject, tap, catchError } from 'rxjs';
 import { jwtDecode } from 'jwt-decode'; // Updated import for v4+
 import { isPlatformBrowser } from '@angular/common';
 import { UserInfo } from '../models/user-info';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  readonly ROOT_URL = 'http://localhost:4231'; // Backend URL
+  readonly ROOT_URL = environment.apiUrl; // Backend URL from environment
   private userAuthInfo: UserInfo = {};
   private userAuth$ = new BehaviorSubject<UserInfo>(this.userAuthInfo);
   public userAuthObs = this.userAuth$.asObservable();

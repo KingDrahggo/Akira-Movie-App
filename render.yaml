@@ -1,0 +1,49 @@
+services:
+  # Backend NestJS API
+  - type: web
+    name: akira-movie-backend
+    runtime: node
+    region: oregon
+    plan: free
+    branch: main
+    rootDir: NestJsBackend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: STAGE
+        value: prod
+      - key: PORT
+        value: 10000
+      - key: MODB_URL
+        sync: false  # Set this in Render Dashboard
+      - key: JWT_SECRET
+        generateValue: true
+      - key: TOKEN_EXP
+        value: 1800
+      - key: FRONTEND_URL
+        sync: false  # Set this after frontend is deployed
+    healthCheckPath: /api
+
+  # Frontend Angular Static Site
+  - type: web
+    name: akira-movie-frontend
+    runtime: node
+    region: oregon
+    plan: free
+    branch: main
+    rootDir: akira-web
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist/akira-web/browser
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=3600
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

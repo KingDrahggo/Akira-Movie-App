@@ -10,11 +10,16 @@ async function bootstrap() {
   const logger = new Logger();
 
   const app = await NestFactory.create(AppModule);
-  // app.enableCors({
-  //   credentials: true,
-  //   origin: 'http://localhost:4200',
-  // });
-  app.enableCors();
+  // Configure CORS for production
+  const allowedOrigins = process.env.FRONTEND_URL 
+    ? [process.env.FRONTEND_URL, 'http://localhost:4200']
+    : ['http://localhost:4200'];
+  
+  app.enableCors({
+    credentials: true,
+    origin: allowedOrigins,
+  });
+  
   app.use(CookieParser());
   app.useGlobalPipes(
     new ValidationPipe({
@@ -38,7 +43,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
 
-  const port = 4231;
+  const port = process.env.PORT || 4231;
   await app.listen(port);
   logger.log(`Application listening on port ${port}`);
 }
